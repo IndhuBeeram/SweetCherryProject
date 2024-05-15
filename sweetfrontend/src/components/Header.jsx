@@ -37,7 +37,7 @@ const ProfileHandler = async () => {
 useEffect(() => {
     ProfileHandler();
 }, [userId]);
-
+const cartCountP=localStorage.getItem("cartCoutP");
   return (
     <div className="body">
       <header>
@@ -47,7 +47,7 @@ useEffect(() => {
         </div>
         <div className="right-column">
           <NavLink className="navl" to="/cart">
-            Cart
+            Cart({cartCountP})
           </NavLink>
           <NavLink className="navl" to="/wishlist">
             Wishlist

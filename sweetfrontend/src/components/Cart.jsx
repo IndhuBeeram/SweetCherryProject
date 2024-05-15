@@ -33,7 +33,8 @@ const Cart = () => {
                     const dataArray = data[0].product;
                     const countObj = {};
                     dataArray.forEach(productId => {
-                        countObj[productId] = 1; 
+                        // Retrieve count value from localStorage, default to 1 if not found
+                        countObj[productId] = parseInt(localStorage.getItem(`count_${productId}`)) || 1;
                     });
                     setCartItems(dataArray);
                     setCount(countObj);
@@ -84,14 +85,21 @@ const Cart = () => {
 
     }, [cartItems, productData, count]);
 
+    const updateCountInStorage = (productId, newCount) => {
+        localStorage.setItem(`count_${productId}`, newCount);
+    };
+    const cartCountP=cartItems.length;
+    localStorage.setItem("cartCoutP",cartCountP);
+
     const removeProductFromCart = async (productId) => {
-       
         try {
             await axios.put(`http://localhost:4000/api/cart/add/${userId}`, { product: productId });
             setCartItems(prevItems => prevItems.filter(product => product !== productId));
             setCount(prevCount => {
                 const newCount = { ...prevCount };
                 delete newCount[productId]; 
+                // Remove count value from localStorage
+                localStorage.removeItem(`count_${productId}`);
                 return newCount;
             });
         } catch (error) {
@@ -100,21 +108,26 @@ const Cart = () => {
     }
 
     const incrementCount = (productId) => {
+        const newCount = (count[productId] || 0) + 1;
         setCount(prev => ({
             ...prev,
-            [productId]: (prev[productId] || 0) + 1
+            [productId]: newCount
         }));
+        updateCountInStorage(productId, newCount);
     }
 
     const decrementCount = (productId) => {
         if (count[productId] > 1) {
+            const newCount = count[productId] - 1;
             setCount(prev => ({
                 ...prev,
-                [productId]: prev[productId] - 1
+                [productId]: newCount
             }));
+            updateCountInStorage(productId, newCount);
         }
     }
 
+    console.log(cartItems.length);
     return (
         <>
             <NavBar />
@@ -142,9 +155,9 @@ const Cart = () => {
                             
                                     </div>
                                     <div className="quantityButtons">
-                                            <button onClick={() => incrementCount(productId)}><i class="bi bi-plus-circle"></i></button>
+                                            <button onClick={() => incrementCount(productId)}><i className="bi bi-plus-circle"></i></button>
                                             <h4>{count[productId]}</h4>
-                                            <button onClick={() => decrementCount(productId)} disabled={count[productId] === 1}><i class="bi bi-dash-circle"></i></button>
+                                            <button onClick={() => decrementCount(productId)} disabled={count[productId] === 1}><i className="bi bi-dash-circle"></i></button>
                                     
                                         <button  type="submit" onClick={() => { removeProductFromCart(productId); } }>Remove</button>
                                         </div>
