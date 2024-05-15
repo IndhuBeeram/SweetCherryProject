@@ -13,6 +13,7 @@ import Cart from './components/Cart';
 import Address from './components/Address';
 import Order from './components/Order';
 import SiteMap from './components/SiteMap';
+import Main from './components/Main';
 
 
 
@@ -26,9 +27,11 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path='/productDetails/:id' element={<ProductDetails/>}/>
+      <Route path='/login' element={<SignUp/>}/>
+      <Route path="/" element={<Main/>}/>
+        {/* <Route path="/" element={<Home/>}/> */}
         <Route path='/:category' element={<Home/>}/>
-        <Route path='/login' element={<SignUp/>}/>
+        <Route path='/productDetails/:id' element={<ProductDetails/>}/>
         <Route path='/wishlist' element={<Wishlist/>}/>
         <Route path="/edit/:id" element={<ProfileEdit/>}/>
         <Route path='/myaccount' element={<MyAccount/>}/>

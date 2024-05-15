@@ -2,7 +2,7 @@ import React, { useEffect, useState, lazy, Suspense } from "react";
 import { toast } from "react-toastify";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 // import SideBar from "../components/Sidebar";
 import "../components/CSS/Home.css";
 import NavBar from "./Navbar";
@@ -44,7 +44,9 @@ const Home = () => {
     const fetchcartData = async () => {
       try {
         // const userId = localStorage.getItem("userId");
-        const response = await fetch(`http://localhost:4000/api/cart/${userId}`);
+        const response = await fetch(
+          `http://localhost:4000/api/cart/${userId}`
+        );
         const data = await response.json();
         console.log(data);
 
@@ -132,7 +134,10 @@ const Home = () => {
           </div>
           <div className="row">
             {productData.map((cupcake) => (
-              <div key={cupcake._id} className="cupcakeDiv col-3 col-t-6 col-m-6">
+              <div
+                key={cupcake._id}
+                className="cupcakeDiv col-3 col-t-6 col-m-6"
+              >
                 <img src={cupcake.imageUrl} alt={cupcake.name} />
                 <div>
                   <div className="cupcakeText">
@@ -168,24 +173,29 @@ const Home = () => {
               Cupcakes Delivered Online with <em>The Cupcake Maker</em>
             </h3>
             <p>
-              Cupcakes make delightful treats for any special occasion. Online cupcake order is a
-              boon for shoppers. At The Cupcake Maker we offer a variety of designer cupcakes that
-              are sure to impress. The soccer cupcake is just right for the sports fan. It works
-              well to celebrate the victory of a soccer player. It will add the requisite
-              sweetness to his joy. This cake is available in 6 pieces for online delivery and
-              can be made in four flavors namely Chocolate, Butterscotch, Pineapple and Vanilla.
-              The rose cupcake is a delight. It adds an element of fun to any celebration be it a
-              Birthday, Anniversary, Christmas or New Years. This is 8 pieces, available in four
-              flavors namely Chocolate, Butterscotch, Pineapple and Vanilla. The special photo
-              cupcake is a personalized cupcake which carries the stamp of individuality of the
-              recipient. Just send in the photograph of the person you wish to celebrate and we
-              will do the rest. It adds a personal touch to any celebration be it a Birthday,
-              Anniversary, or Christening. Our home delivery service will deliver the goods to you
-              in time and in a good condition. So go ahead and treat your loved ones. Cupcakes are
-              perfect indulgence for any occasion and are quite hard to resist. The fresh and
-              spongy texture makes it the best gift to be chosen for your loved ones. At The
-              Cupcake Maker, we have baked all our cupcakes with utmost love, care and affection
-              so that every bite that you take transports you to the heavenly feeling.
+              Cupcakes make delightful treats for any special occasion. Online
+              cupcake order is a boon for shoppers. At The Cupcake Maker we
+              offer a variety of designer cupcakes that are sure to impress. The
+              soccer cupcake is just right for the sports fan. It works well to
+              celebrate the victory of a soccer player. It will add the
+              requisite sweetness to his joy. This cake is available in 6 pieces
+              for online delivery and can be made in four flavors namely
+              Chocolate, Butterscotch, Pineapple and Vanilla. The rose cupcake
+              is a delight. It adds an element of fun to any celebration be it a
+              Birthday, Anniversary, Christmas or New Years. This is 8 pieces,
+              available in four flavors namely Chocolate, Butterscotch,
+              Pineapple and Vanilla. The special photo cupcake is a personalized
+              cupcake which carries the stamp of individuality of the recipient.
+              Just send in the photograph of the person you wish to celebrate
+              and we will do the rest. It adds a personal touch to any
+              celebration be it a Birthday, Anniversary, or Christening. Our
+              home delivery service will deliver the goods to you in time and in
+              a good condition. So go ahead and treat your loved ones. Cupcakes
+              are perfect indulgence for any occasion and are quite hard to
+              resist. The fresh and spongy texture makes it the best gift to be
+              chosen for your loved ones. At The Cupcake Maker, we have baked
+              all our cupcakes with utmost love, care and affection so that
+              every bite that you take transports you to the heavenly feeling.
             </p>
           </div>
         </main>

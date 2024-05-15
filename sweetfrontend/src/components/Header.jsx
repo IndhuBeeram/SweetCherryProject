@@ -1,12 +1,17 @@
-// Header.jsx
-
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./CSS/Header.css";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartItems } from "../store/slice/getUserslice";
+import { IoCartOutline } from "react-icons/io5";
 
 export default function Header() {
   const token = localStorage.getItem("token");
+  const data = useSelector((state) => state.api.data);
+  const cartItems = data?.[0]?.product;
+  const cartLength = cartItems ? cartItems.length : 0;
+
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -14,30 +19,32 @@ export default function Header() {
     navigate("/");
   };
 
-  const [data,setData]=useState({
+  const [data1, setData] = useState({
     name: "",
-});
+  });
 
-const userId=localStorage.getItem('userId');
-console.log(userId);
+  const userId = localStorage.getItem("userId");
 
-const ProfileHandler = async () => {
+  const ProfileHandler = async () => {
     try {
-        const userId = localStorage.getItem('userId');
-        console.log(userId)
-        const response = await axios.get(`http://localhost:4000/api/${userId}` );
-       
-        setData(response.data);
+      const response = await axios.get(`http://localhost:4000/api/${userId}`);
+      setData(response.data);
     } catch (error) {
-        console.error('Error fetching user profile:', error.message);
+      console.error("Error fetching user profile:", error.message);
     }
-};
+  };
 
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const UserId = localStorage.getItem("userId");
 
-useEffect(() => {
+    dispatch(fetchCartItems(UserId));
+  });
+
+  useEffect(() => {
     ProfileHandler();
-}, [userId]);
-const cartCountP=localStorage.getItem("cartCoutP");
+  }, [userId]);
+
   return (
     <div className="body">
       <header>
@@ -46,13 +53,28 @@ const cartCountP=localStorage.getItem("cartCoutP");
           The Cupcake Maker
         </div>
         <div className="right-column">
-          <NavLink className="navl" to="/cart">
-            Cart({cartCountP})
+          <NavLink
+            className="navl"
+            to="/cart"
+            style={{ position: "relative", display: "inline-block" }}
+          >
+            <IoCartOutline style={{ fontSize: "20px" }} />
+            <span
+              style={{
+                fontSize: "12px",
+                position: "absolute",
+                top: "-2px",
+                right: "19px",
+              }}
+            >
+              {cartLength}
+            </span>
           </NavLink>
+
           <NavLink className="navl" to="/wishlist">
-            Wishlist
+            <i class="bi bi-heart"></i>
           </NavLink>
-          
+
           {token ? (
             <div className="welcomemessage">
               <button
@@ -61,17 +83,17 @@ const cartCountP=localStorage.getItem("cartCoutP");
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Hi {data.name}
+                Hi {data1.name}
               </button>
               <ul className="dropdown-menu">
                 <li>
                   <a className="dropdown-item" href="/wishlist">
-                    Wishlist <i class="bi bi-heart"></i>
+                    Wishlist <i className="bi bi-heart"></i>
                   </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="/myaccount">
-                    My Account <i class="bi bi-person"></i>
+                    My Account <i className="bi bi-person"></i>
                   </a>
                 </li>
                 <li>
@@ -80,12 +102,8 @@ const cartCountP=localStorage.getItem("cartCoutP");
                   </a>
                 </li>
                 <li>
-                  <a
-                    className="dropdown-item"
-                    href="/"
-                    onClick={handleLogOut}
-                  >
-                    Logout <i class="bi bi-box-arrow-right"></i>
+                  <a className="dropdown-item" href="/" onClick={handleLogOut}>
+                    Logout <i className="bi bi-box-arrow-right"></i>
                   </a>
                 </li>
               </ul>
