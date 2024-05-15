@@ -1,0 +1,36 @@
+/* Sitemap Styles */
+.sitemap-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+ 
+.sitemap-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+ 
+.sitemap-list {
+    list-style-type: none;
+    padding: 0;
+}
+ 
+.sitemap-column {
+    width: calc(100% / 4);
+    float: left;
+}
+ 
+.sitemap-list-item {
+    margin-bottom: 10px;
+}
+ 
+.sitemap-list-item a {
+   
+    color: #333;
+    transition: color 0.3s ease;
+}
+ 
+.sitemap-list-item a:hover {
+    color: #007bff;
+}

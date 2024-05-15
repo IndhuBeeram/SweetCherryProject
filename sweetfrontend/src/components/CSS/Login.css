@@ -1,0 +1,180 @@
+.mainBorder {
+    padding: 0 20px;
+}
+
+.caption {
+    background: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+}
+
+.caption h4 {
+    color:#C71749;
+    font-size: 150%;
+    letter-spacing: 5px;
+}
+
+.authenticateBox {
+    position: relative;
+    background-color: #FEFEFE;
+    height: 100%;
+    margin: 30px auto;
+    border: 1px solid #301B1F;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    line-height: 35px;
+    padding-bottom: 20px;
+    box-shadow: 4px 5px 4px #CCCCCC;
+}
+.authenticateBoxL {
+    position: relative;
+    background-color: #FEFEFE;
+    height: 30%;
+    margin: 30px auto;
+    border: 1px solid #301B1F;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    line-height: 35px;
+    padding-bottom: 20px;
+    box-shadow: 4px 5px 4px #CCCCCC;
+}
+.authenticateBox h4 {
+    background: #E34C77;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 10px ;
+    font-size: 105%;
+    font-weight: 500;
+    border: 1px solid #301B1F;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 10px;
+}
+.authenticateBoxL h4 {
+    background: #E34C77;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 10px;
+    font-size: 105%;
+    font-weight: 500;
+    border: 1px solid #301B1F;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.authenticateBox p {
+    margin: 2 auto;
+}
+.authenticateBoxL p {
+    margin: 4 auto;
+}
+.authenticateBoxL label {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
+.authenticateBox label {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+
+.authenticateBox input {
+    padding: 1px 2px;
+    border-radius: 5px;
+}
+.authenticateBoxL input {
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.authenticateBox input:focus {
+    outline: none;
+    border: 2px solid #FBD6DC;
+}
+.authenticateBoxL input:focus {
+    outline: none;
+    border: 2px solid #FBD6DC;
+}
+
+
+.authenticateBox a:link {
+    text-decoration: none;
+    color: #000000;
+    float: left;
+    font-size: 80%;
+    margin-left: 5%;
+}
+.authenticateBoxL a:link {
+    text-decoration: none;
+    color: #000000;
+    float: left;
+    font-size: 80%;
+    margin-left: 5%;
+}
+
+.authenticateBox a:hover {
+    color: #D94D66;
+}
+.authenticateBoxL a:hover {
+    color: #D94D66;
+}
+
+.authenticateBox button {
+    width: 150px;
+    position: absolute;
+    bottom: -20px;
+    right: 50px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 2px 2px 2px #888888;
+}
+.authenticateBoxL button {
+    width: 150px;
+    position: absolute;
+    bottom: -20px;
+    right: 50px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 2px 2px 2px #888888;
+}
+
+.authenticateBox button:hover {
+    cursor: pointer;
+}
+.authenticateBoxL button:hover {
+    cursor: pointer;
+}
+
+.authenticateBox button:active {
+    outline: none;
+    border-top: 2px solid #D94D66;
+    border-left: 2px solid #D94D66;
+}
+.authenticateBoxL button:active {
+    outline: none;
+    border-top: 2px solid #D94D66;
+    border-left: 2px solid #D94D66;
+}
+.form-check-label{
+
+}
+#showPassword{
+    margin-left: 130px
+}
+
+.gender p {
+    margin-left: 256px;
+}
+
+.radio p{
+    margin: unset
+}

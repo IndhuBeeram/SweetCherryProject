@@ -1,0 +1,57 @@
+header{
+    background: linear-gradient(to right, #6F2A3E, #4c1f36, #331524);
+    height: 120px;
+}
+header img{
+    float: left;
+    width: 110px;
+    height: auto;
+    margin-left: 30px;
+    margin-right: 10px;
+    padding: 3px;
+
+}
+.headerLogo {
+    width: 250px;
+    margin-top: 5px;
+    float: left;
+    font-size: 155%;
+    color: #E34C77;
+    font-family: cursive;
+   
+}
+.navl{
+    float: right;
+    display: block;
+    width: 70px;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    clear:right;
+    margin-top: 10px;
+    margin-right: 20px;
+    padding:3px 5px;
+    font-family: cursive;
+}
+.nav-link:hover{
+    background-color: #E34C77;
+    border-radius: 5px;
+}
+  
+  .right-column {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end; 
+    
+  }
+  
+ 
+  /* CupCake dropdown button styles */
+  .welcomemessage {
+    text-align: right;
+    color: white;
+    margin-right: 20px;
+    outline: none;
+
+  }
+  button:focus { outline: none; }

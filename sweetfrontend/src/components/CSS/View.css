@@ -1,0 +1,143 @@
+.mainRowV {
+    margin: 20px 40px 10px;
+}
+.captionV {
+    background: #FEFEFE;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.captionV h4 {
+    color: #C71749;
+    font-size: 150%;
+    letter-spacing: 5px;
+}
+
+.cupcakeDivV {
+    padding: 70px ;
+    background-color: #FEFEFE;
+}
+
+.cupcakeTextV {
+    float: right;
+    width: 60%;;
+    background: #FBD6D6;
+    padding: 10px;
+    margin-top: 5px;
+    text-align: center;
+    box-shadow: -5px 5px 5px #CCCCCC;
+}
+
+.cupcakeTextV em {
+    display: block;
+    text-align: center;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 150%;
+    color: #C71749;
+    margin: 10px;
+}
+
+.cupcakeTextV p {
+    margin-bottom: 30px;
+}
+
+.cupcakeTextV input {
+    padding: 5px;
+}
+
+.cupcakeTextV label {
+    margin-right: 10px;
+}
+
+.cupcakeTextV a {
+    text-decoration: none;
+    color: #555555;
+    font-size: 80%;
+}
+
+.cupcakeTextV a:hover {
+    text-decoration: underline;
+    font-size: 90%;
+}
+
+.cupcakeTextV button {
+    width: 135px;
+    padding: 5px 10px;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 5px;
+}
+
+.cupcakeTextV button:hover {
+    cursor: pointer;
+}
+
+.cupcakeTextV button:active {
+    outline: none;
+    border-top: 2px solid #D94D66;
+    border-left: 2px solid #D94D66;
+}
+
+.cupcakeImgV {
+    background: #FEFEFE;
+    float: left;
+    display: inline-block;
+    padding: 10px 15px;
+    width: 180px;
+    height: auto;
+}
+
+.cupcakeImgV img {
+    float: left;
+    clear: left;
+    display: block;
+    border: 5px solid #FBD6D6;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.cupcakeImgV img:hover {
+    background: #FEFEFE;
+    border: 2px solid #CA2A58;
+    cursor: pointer;
+    position: relative;
+    left: 150px;
+    transform: scale(2);
+}
+
+.button {
+    width: 135px;
+    padding: 5px 10px;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 5px;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.button{
+    outline: none;
+    border-top: 2px solid #D94D66;
+    border-left: 2px solid #D94D66;
+}
+
+@media screen and (max-width: 600px) {
+    .cupcakeTextV {
+        float: left;
+        width: 100%;;
+        background: #FBD6D6;
+        padding: 10px;
+        margin-top: 10px;
+        text-align: center;
+        box-shadow: 5px 5px 5px #CCCCCC; 
+    }
+}

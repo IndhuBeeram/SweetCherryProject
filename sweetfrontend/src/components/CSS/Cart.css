@@ -1,0 +1,56 @@
+/* Cart styles */
+.mainRow {
+    margin-top: 20px;
+  }
+
+
+.cupcakeCart {
+    
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    /* font-family: cursive; */
+
+  }
+  
+  .cupcakeCart img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  
+  .quantityButtons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .quantityButtons button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    /* background-color: #007bff; */
+    /* color: #fff; */
+    cursor: pointer;
+  }
+  
+  .quantityButtons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .totalPrice {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .adjust {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+  }
+  
