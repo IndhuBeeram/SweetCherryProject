@@ -11,7 +11,8 @@ export const fetchCartItems = createAsyncThunk(
       return data;
     }
   );
-  
+//Action 2 for userName
+
 
 const apiSlice =createSlice({
     name:"fetchCartItems",

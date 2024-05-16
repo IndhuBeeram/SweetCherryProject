@@ -58,22 +58,19 @@ export default function Header() {
             to="/cart"
             style={{ position: "relative", display: "inline-block" }}
           >
-            <IoCartOutline style={{ fontSize: "20px" }} />
+            <IoCartOutline style={{ fontSize: "30px" }} />
             <span
               style={{
                 fontSize: "12px",
                 position: "absolute",
                 top: "-2px",
-                right: "19px",
+                right: "15px",
               }}
             >
               {cartLength}
             </span>
           </NavLink>
 
-          <NavLink className="navl" to="/wishlist">
-            <i class="bi bi-heart"></i>
-          </NavLink>
 
           {token ? (
             <div className="welcomemessage">
