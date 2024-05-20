@@ -4,6 +4,9 @@ import NavBar from "./Navbar";
 import axios from "axios";
 import SideBar from "./Sidebar";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { fetchCartItems } from "../store/slice/getUserslice";
+import "./CSS/wishlist.css"
 
 const Wishlist = () => {
   const token = localStorage.getItem("token");
@@ -12,12 +15,13 @@ const Wishlist = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [productData, setProductData] = useState({});
   const [cart, setCart] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     }
-  }, []);
+  }, [token, navigate]);
 
   const userId = localStorage.getItem("userId");
 
@@ -95,9 +99,9 @@ const Wishlist = () => {
         fetchAllProducts(pId);
       }
     });
-  }, [wishlistItems]);
+  }, [wishlistItems, productData]);
 
-  const removeProductFromwishlist = async (productId) => {
+  const removeProductFromWishlist = async (productId) => {
     console.log("removeid:", productId);
     console.log("remove user:", userId);
     try {
@@ -116,7 +120,6 @@ const Wishlist = () => {
     try {
       const userId = localStorage.getItem("userId");
       if (!userId) {
-        // Handle the case where userId doesn't exist
         return;
       }
       const response = await axios.put(
@@ -124,7 +127,8 @@ const Wishlist = () => {
         { product: pId }
       );
       setCart(response.data.product);
-      toast.success("Product added to cart successfully");
+      dispatch(fetchCartItems(userId));
+      toast.success("Product added to cart successfully", { autoClose: 2000 });
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -144,55 +148,58 @@ const Wishlist = () => {
             <h4>Wishlist</h4>
           </div>
           <div className="row">
-            {wishlistItems.map((productId) => (
-              <div key={productId} className="cupcakeDiv col-3 col-t-6 col-m-6">
-                {productData[productId] && (
-                  <div>
-                    <img
-                      src={productData[productId].imageUrl}
-                      alt={productData[productId].name}
-                    />
-
-                    <div className="cupcakeText">
-                      <h3>{productData[productId].name}</h3>
-                      {productData[productId].description}
-                    </div>
-                    <h4>Rs. {productData[productId].price}</h4>
-                    {isProductInCart(productId) ? (
-                      <NavLink to={"/cart"}>
-                        <button className="link" type="submit">
-                          Go to cart
-                        </button>
-                        <br />
-                      </NavLink>
-                    ) : (
-                      <>
-                        <button
-                          className="link"
-                          onClick={() => addToCart(productId)}
-                          type="submit"
-                        >
-                          Add to cart
-                        </button>
-                        <br />
-                      </>
-                    )}
-                    <button
-                      className="link"
-                      type="submit"
-                      onClick={() => {
-                        removeProductFromwishlist(productId);
-                      }}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                )}
+            {wishlistItems.length === 0 ? (
+              <div className="emptywishlist">
+                <img src="wishlist.png" alt="Empty Wishlist" />
+               
               </div>
-            ))}
+            ) : (
+              wishlistItems.map((productId) => (
+                <div key={productId} className="cupcakeDiv col-3 col-t-6 col-m-6">
+                  {productData[productId] && (
+                    <div>
+                      <img
+                        src={productData[productId].imageUrl}
+                        alt={productData[productId].name}
+                      />
+                      <div className="cupcakeText">
+                        <h3>{productData[productId].name}</h3>
+                        {productData[productId].description}
+                      </div>
+                      <h4>Rs. {productData[productId].price}</h4>
+                      {isProductInCart(productId) ? (
+                        <NavLink to={"/cart"}>
+                          <button className="link" type="submit">
+                            Go to cart
+                          </button>
+                          <br />
+                        </NavLink>
+                      ) : (
+                        <>
+                          <button
+                            className="link"
+                            onClick={() => addToCart(productId)}
+                            type="submit"
+                          >
+                            Add to cart
+                          </button>
+                          <br />
+                        </>
+                      )}
+                      <button
+                        className="link"
+                        type="submit"
+                        onClick={() => removeProductFromWishlist(productId)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </main>
-
         <footer>&copy; The Cupcake Maker, All rights reserved.</footer>
       </div>
     </>

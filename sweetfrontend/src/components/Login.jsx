@@ -26,7 +26,7 @@ export default function Login() {
     axios
       .post("http://localhost:4000/api/login", data)
       .then((res) => {
-        toast.success("Logged in Successfully");
+        toast.success("Logged in Successfully",{autoClose:3000});
 
         const token = res.data.token;
         localStorage.setItem("token", token);
@@ -40,7 +40,7 @@ export default function Login() {
 
       .catch((err) => {
         console.log(err);
-        toast.error("Incorrect Email or Password");
+        toast.error("Incorrect Email or Password",{autoClose:3000});
       });
   };
   if (token) {

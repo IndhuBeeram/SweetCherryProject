@@ -11,9 +11,10 @@ import MyAccount from './components/MyAccount';
 import ProfileEdit from './components/Edit';
 import Cart from './components/Cart';
 import Address from './components/Address';
-import Order from './components/Order';
+
 import SiteMap from './components/SiteMap';
 import Main from './components/Main';
+import PaymentForm from './components/Payment';
 
 
 
@@ -37,9 +38,9 @@ function App() {
         <Route path='/myaccount' element={<MyAccount/>}/>
         <Route path='/address' element={<Address/>}/>
         <Route path='/address/:addressId' element={<Address/>}/>
-        <Route path='/order' element={<Order/>}/>
+        <Route path='/order/:id' element={<PaymentForm/>}/>
         <Route path='/sitemap' element={<SiteMap/>}/>
-     
+      
         <Route path='/cart' element={<Cart/>}/>
 
       </Routes>

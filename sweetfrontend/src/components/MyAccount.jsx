@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-import NavBar from "./Navbar";
-import SideBar from "./Sidebar";
+import NavBar from "../components/Navbar";
+import SideBar from "../components/Sidebar"
 import { toast } from "react-toastify";
+
 const MyAccount = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
@@ -40,10 +41,10 @@ const MyAccount = () => {
   }, []);
   return (
     <>
-      <NavBar />
-
+     
+    <NavBar/>
       <div className="row mainRowV">
-        <SideBar />
+        <SideBar/>
         <main className="col-9 col-t-8 col-m-12">
           <div className="container shadow-lg p-3 mb-5 mt-5 bg-white rounded p-5">
             <div className="row">

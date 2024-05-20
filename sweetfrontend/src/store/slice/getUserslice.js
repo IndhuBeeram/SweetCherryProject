@@ -1,6 +1,6 @@
-import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-//Action
+
 export const fetchCartItems = createAsyncThunk(
     "fetchCartItems",
     async (id) => {
@@ -10,33 +10,55 @@ export const fetchCartItems = createAsyncThunk(
       console.log(data);
       return data;
     }
-  );
-//Action 2 for userName
+);
 
 
-const apiSlice =createSlice({
-    name:"fetchCartItems",
+export const fetchUserDetails = createAsyncThunk(
+    "fetchUserDetails",
+    async (id) => {
+      console.log("userId:" + id);
+      const response = await fetch(`http://localhost:4000/api/${id}`);
+      const data = await response.json(); // Await here
+      console.log(data);
+      return data;
+    }
+);
+
+const apiSlice = createSlice({
+    name: "api",
     initialState: {
-        isLoading: false,
-        data: null,
-        isError: false
+        isLoadingCart: false,
+        cartData: null,
+        isErrorCart: false,
+        isLoadingUser: false,
+        userData: null,
+        isErrorUser: false
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchCartItems
-            .pending, (state) => {
-                state.isLoading = true;
-            });
-        builder.addCase(fetchCartItems
-            .fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.data = action.payload;
-            });
-        builder.addCase(fetchCartItems
-            .rejected, (state, action) => {
-                state.isError = true;
-                console.log("Error: ", action.payload);
-            });
+        builder.addCase(fetchCartItems.pending, (state) => {
+            state.isLoadingCart = true;
+        });
+        builder.addCase(fetchCartItems.fulfilled, (state, action) => {
+            state.isLoadingCart = false;
+            state.cartData = action.payload;
+        });
+        builder.addCase(fetchCartItems.rejected, (state, action) => {
+            state.isErrorCart = true;
+            console.log("Cart Error: ", action.payload);
+        });
+
+        builder.addCase(fetchUserDetails.pending, (state) => {
+            state.isLoadingUser = true;
+        });
+        builder.addCase(fetchUserDetails.fulfilled, (state, action) => {
+            state.isLoadingUser = false;
+            state.userData = action.payload;
+        });
+        builder.addCase(fetchUserDetails.rejected, (state, action) => {
+            state.isErrorUser = true;
+            console.log("User Error: ", action.payload);
+        });
     }
-})
+});
 
 export default apiSlice.reducer;

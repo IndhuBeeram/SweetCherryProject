@@ -53,4 +53,9 @@
     flex-direction: row;
     margin-left: 10px;
   }
-  
+  .emptyCart img {
+    width: 800px;
+    height: 500px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }

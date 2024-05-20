@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./CSS/Header.css";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCartItems } from "../store/slice/getUserslice";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCartItems, fetchUserDetails } from "../store/slice/getUserslice";
 import { IoCartOutline } from "react-icons/io5";
 
 export default function Header() {
   const token = localStorage.getItem("token");
-  const data = useSelector((state) => state.api.data);
-  const cartItems = data?.[0]?.product;
-  const cartLength = cartItems ? cartItems.length : 0;
-
+  
+  const cartData = useSelector((state) => state.api.cartData);
+  const userData = useSelector((state) => state.api.userData);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -19,31 +18,16 @@ export default function Header() {
     navigate("/");
   };
 
-  const [data1, setData] = useState({
-    name: "",
-  });
-
-  const userId = localStorage.getItem("userId");
-
-  const ProfileHandler = async () => {
-    try {
-      const response = await axios.get(`http://localhost:4000/api/${userId}`);
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching user profile:", error.message);
-    }
-  };
-
-  const dispatch = useDispatch();
   useEffect(() => {
-    const UserId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId");
+    dispatch(fetchCartItems(userId));
+    dispatch(fetchUserDetails(userId));
+  }, [token]);
+  
 
-    dispatch(fetchCartItems(UserId));
-  });
-
-  useEffect(() => {
-    ProfileHandler();
-  }, [userId]);
+  const cartItems = cartData?.[0]?.product;
+  const cartLength = cartItems ? cartItems.length : 0;
+  const userName = userData ? userData.name : "";
 
   return (
     <div className="body">
@@ -71,7 +55,6 @@ export default function Header() {
             </span>
           </NavLink>
 
-
           {token ? (
             <div className="welcomemessage">
               <button
@@ -80,7 +63,7 @@ export default function Header() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Hi {data1.name}
+                Hi {userName}
               </button>
               <ul className="dropdown-menu">
                 <li>
@@ -99,7 +82,11 @@ export default function Header() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/" onClick={handleLogOut}>
+                  <a
+                    className="dropdown-item"
+                    href="/"
+                    onClick={handleLogOut}
+                  >
                     Logout <i className="bi bi-box-arrow-right"></i>
                   </a>
                 </li>

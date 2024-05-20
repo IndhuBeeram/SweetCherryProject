@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "./Navbar";
+
 import axios from "axios";
-import SideBar from "./Sidebar";
-import "./CSS/Cart.css";
+import "./CSS/Cart.css"
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchCartItems } from "../store/slice/getUserslice";
+import NavBar from "../components/Navbar";
+import SideBar from "../components/Sidebar"
 
 const Cart = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [cartItems, setCartItems] = useState([]);
   const [productData, setProductData] = useState({});
   const [count, setCount] = useState({});
   const [total, setTotal] = useState(0);
+  
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     }
-  }, []);
+  }, [token, navigate]);
 
   const userId = localStorage.getItem("userId");
 
@@ -35,7 +40,6 @@ const Cart = () => {
           const dataArray = data[0].product;
           const countObj = {};
           dataArray.forEach((productId) => {
-            // Retrieve count value from localStorage, default to 1 if not found
             countObj[productId] =
               parseInt(localStorage.getItem(`count_${productId}`)) || 1;
           });
@@ -48,9 +52,11 @@ const Cart = () => {
         console.error("Error fetching data:", error);
       }
     };
+   
 
     if (userId) {
       fetchCartItems();
+     
     }
   }, [userId]);
 
@@ -92,8 +98,8 @@ const Cart = () => {
   const updateCountInStorage = (productId, newCount) => {
     localStorage.setItem(`count_${productId}`, newCount);
   };
-  const cartCountP = cartItems.length;
-  localStorage.setItem("cartCoutP", cartCountP);
+
+  localStorage.setItem("total", total);
 
   const removeProductFromCart = async (productId) => {
     try {
@@ -106,7 +112,7 @@ const Cart = () => {
       setCount((prevCount) => {
         const newCount = { ...prevCount };
         delete newCount[productId];
-        // Remove count value from localStorage
+        dispatch(fetchCartItems(userId));
         localStorage.removeItem(`count_${productId}`);
         return newCount;
       });
@@ -135,68 +141,75 @@ const Cart = () => {
     }
   };
 
-  console.log(cartItems.length);
   return (
     <>
-      <NavBar />
+      <NavBar/>
       <div className="row mainRow">
-        <SideBar />
+        <SideBar/>
         <main className="col-9 col-t-8 col-m-12">
           <div className="caption col-12 col-t-12 col-m-12">
             <h4>Cart</h4>
           </div>
           <div className="cupcakeCart">
-            {cartItems.map((productId) => (
-              <div key={productId} className="cupcakeCart">
-                {productData[productId] && (
-                  <>
-                    <div className="adjust">
-                      <img
-                        src={productData[productId].imageUrl}
-                        alt={productData[productId].name}
-                      />
-                      <div style={{ marginLeft: 100 }}>
-                        <h3>{productData[productId].name}</h3>
-                        <h4>
-                          Rs. {productData[productId].price * count[productId]}
-                        </h4>
-                        {productData[productId].description}
-                      </div>
-                    </div>
-                    <div className="quantityButtons">
-                      <button onClick={() => incrementCount(productId)}>
-                        <i className="bi bi-plus-circle"></i>
-                      </button>
-                      <h4>{count[productId]}</h4>
-                      <button
-                        onClick={() => decrementCount(productId)}
-                        disabled={count[productId] === 1}
-                      >
-                        <i className="bi bi-dash-circle"></i>
-                      </button>
-
-                      <button
-                        type="submit"
-                        onClick={() => {
-                          removeProductFromCart(productId);
-                        }}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </>
-                )}
+            
+            {cartItems.length === 0 ? (
+              <div className="emptyCart">
+                <img src="cart3.png" alt="Empty Cart" />
+                {/* <h3>Your cart is empty</h3> */}
               </div>
-            ))}
-
-            <h4 className="totalPrice">Total Price: {total}</h4>
-            <NavLink to={"/address"}>
-              {" "}
-              <button>Place Order</button>
-            </NavLink>
+            ) : (
+              cartItems.map((productId) => (
+                <div key={productId} className="cupcakeCart">
+                  {productData[productId] && (
+                    <>
+                      <div className="adjust">
+                        <img
+                          src={productData[productId].imageUrl}
+                          alt={productData[productId].name}
+                        />
+                        <div style={{ marginLeft: 100 }}>
+                          <h3>{productData[productId].name}</h3>
+                          <h4>
+                            Rs. {productData[productId].price * count[productId]}
+                          </h4>
+                          {productData[productId].description}
+                        </div>
+                      </div>
+                      <div className="quantityButtons">
+                        <button onClick={() => incrementCount(productId)}>
+                          <i className="bi bi-plus-circle"></i>
+                        </button>
+                        <h4>{count[productId]}</h4>
+                        <button
+                          onClick={() => decrementCount(productId)}
+                          disabled={count[productId] === 1}
+                        >
+                          <i className="bi bi-dash-circle"></i>
+                        </button>
+                        <button
+                          type="submit"
+                          onClick={() => {
+                            removeProductFromCart(productId);
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))
+            )}
+            {cartItems.length > 0 && (
+              <>
+                <h4 className="totalPrice">Total Price: {total}</h4>
+                <NavLink to={"/address"}>
+                  <button>Place Order</button>
+                </NavLink>
+              </>
+            )}
           </div>
         </main>
-
         <footer>&copy; The Cupcake Maker, All rights reserved.</footer>
       </div>
     </>

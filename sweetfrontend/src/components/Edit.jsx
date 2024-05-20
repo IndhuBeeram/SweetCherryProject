@@ -3,8 +3,9 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import NavBar from "./Navbar";
-import SideBar from "./Sidebar";
+import NavBar from "../components/Navbar";
+import SideBar from "../components/Sidebar"
+
 
 const ProfileEdit = () => {
   const { id } = useParams();
@@ -45,10 +46,10 @@ const ProfileEdit = () => {
   };
   return (
     <>
-      <NavBar />
-
+      
+      <NavBar/>
       <div className="row mainRowV">
-        <SideBar />
+       <SideBar/>
         <main className="col-9 col-t-8 col-m-12">
           <div className="border border dark rounded container-fluid w-50 shadow-lg p-3 mb-5 mt-5 bg-white rounded">
             <h3 className="text-center mb-4">Edit Profile</h3>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import NavBar from "./Navbar";
-import SideBar from "./Sidebar";
+import NavBar from "../components/Navbar";
+import SideBar from "../components/Sidebar"
 import "./CSS/Address.css";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
@@ -73,17 +73,18 @@ const Address = () => {
 
   const removeAddress = async (addressid) => {
     try {
-      let receivedProduct = await axios.delete(
-        `http://localhost:4000/api/address/${userId}/${addressid}`,
-        editedAddress
+      const response = await axios.delete(
+        `http://localhost:4000/api/address/${userId}/${addressid}`
       );
-      if (!receivedProduct) {
-        throw new Error("Failed to delete product");
+      if (!response.data.success) {
+        throw new Error("Failed to delete address");
       }
       toast.success("Address Removed Successfully");
-      navigate("/cart");
+      // Remove the deleted address from the state
+      setData(data.filter((address) => address._id !== addressid));
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error deleting address:", error);
+      toast.error("Failed to delete address");
     }
   };
 
@@ -116,6 +117,48 @@ const Address = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    // Basic form validation
+    if (!editedAddress.name) {
+      toast.error("Name is required");
+      return;
+    }
+    if (!editedAddress.mobilenum || editedAddress.mobilenum.length !== 10) {
+      toast.error("Mobile number must be 10 digits");
+      return;
+    }
+    if (!editedAddress.pincode || editedAddress.pincode.length !== 6) {
+      toast.error("Pincode must be 6 digits");
+      return;
+    }
+    if (!editedAddress.locality) {
+      toast.error("Locality is required");
+      return;
+    }
+    if (!editedAddress.address) {
+      toast.error("Address is required");
+      return;
+    }
+    if (!editedAddress.city) {
+      toast.error("City is required");
+      return;
+    }
+    if (!editedAddress.state) {
+      toast.error("State is required");
+      return;
+    }
+    if (
+      editedAddress.alternatephonenumber &&
+      editedAddress.alternatephonenumber.length !== 10
+    ) {
+      toast.error("Alternate phone number must be 10 digits");
+      return;
+    }
+    if (!editedAddress.addresstype) {
+      toast.error("Address type is required");
+      return;
+    }
+
     try {
       let response;
       if (addressId) {
@@ -132,17 +175,20 @@ const Address = () => {
         toast.success("Address Added Successfully");
       }
       console.log("Address saved/updated successfully:", response.data);
-      navigate("/");
+      setShowEditForm(false); // Hide the form after successful save
+      fetchAddress(); // Refresh the address list
     } catch (error) {
       console.error("Error saving/updating address:", error);
+      toast.error("Failed to save/update address");
     }
   };
 
   return (
     <>
-      <NavBar />
+      <NavBar/>
       <div className="row mainRow">
-        <SideBar />
+        <SideBar/>
+
         <main className="col-9 col-t-8 col-m-12">
           <div className="caption col-12 col-t-12 col-m-12">
             <h4>Address</h4>
@@ -169,7 +215,7 @@ const Address = () => {
                     </div>
                     {selectedAddress === address && (
                       <div>
-                        <NavLink to={"/order"}>
+                        <NavLink to={`/order/${address._id}`}>
                           <button
                             onClick={() =>
                               console.log(
@@ -192,11 +238,9 @@ const Address = () => {
                           </button>
                         </NavLink>
                         <button
-                          onClick={() => {
-                            removeAddress(editedAddress._id);
-                          }}
+                          onClick={() => removeAddress(address._id)}
                         >
-                          delete
+                          Delete
                         </button>
                       </div>
                     )}
@@ -336,7 +380,7 @@ const Address = () => {
                 <div className="type d-flex ms-10">
                   <p>
                     <label htmlFor="addresstype">
-                      <strong>Adress Type</strong>
+                      <strong>Address Type</strong>
                     </label>
                   </p>
 
@@ -368,6 +412,7 @@ const Address = () => {
                   <button
                     type="submit"
                     className="btn btn-success w-100 rounded-0"
+                    
                   >
                     Save
                   </button>

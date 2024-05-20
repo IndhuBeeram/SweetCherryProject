@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import SideBar from "./Sidebar";
+
 import "./CSS/View.css";
-import NavBar from "./Navbar";
+import NavBar from "../components/Navbar";
+import SideBar from "../components/Sidebar"
 import { toast } from "react-toastify";
+import {  useDispatch } from "react-redux";
+import { fetchCartItems } from "../store/slice/getUserslice";
 
 const ProductDetails = () => {
   const [data, setData] = useState({
@@ -18,6 +21,7 @@ const ProductDetails = () => {
   const { id } = useParams();
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,7 +93,8 @@ const ProductDetails = () => {
         { product: pId }
       );
       setCart(response.data.product);
-      toast.success("Product added to cart successfully");
+      dispatch(fetchCartItems(userId));
+      toast.success("Product added to cart successfully",{autoClose:2000});
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -99,7 +104,7 @@ const ProductDetails = () => {
     try {
       const userId = localStorage.getItem("userId");
       if (!userId) {
-        toast.warn("Please log in to add products to your cart");
+        toast.warn("Please log in to add products to your cart",{autoClose:3000});
 
         return;
       }
@@ -108,7 +113,7 @@ const ProductDetails = () => {
         { product: pId }
       );
       setWishlist(response.data.product);
-      toast.success("Product added to wishlist successfully");
+      toast.success("Product added to wishlist successfully",{autoClose:2000});
     } catch (error) {
       console.error("Error adding to wishlist:", error);
     }
@@ -125,7 +130,7 @@ const ProductDetails = () => {
         { product: pId }
       );
       setWishlist(response.data.product);
-      toast.success("Product removed from wishlist successfully");
+      toast.success("Product removed from wishlist successfully",{autoClose:2000});
     } catch (error) {
       console.error("Error removing from wishlist:", error);
     }
@@ -142,9 +147,9 @@ const ProductDetails = () => {
 
   return (
     <>
-      <NavBar />
+    <NavBar/>
       <div className="row mainRowV">
-        <SideBar />
+        <SideBar/>
         <main className="col-9 col-t-8 col-m-12">
           <div className="captionV col-12 col-t-12 col-m-12">
             <h4>{data.name}</h4>

@@ -53,6 +53,24 @@ exports.getAddressesByUserId = async (req, res) => {
 };
 
 
+
+exports.getAddressByUserIdAndAddressId = async (req, res) => {
+    try {
+        const { userId, addressId } = req.params;
+
+        // Find the address based on both user ID and address ID
+        const address = await Address.findOne({ userId, 'Address._id': addressId }, { 'Address.$': 1 });
+
+        if (!address) {
+            return res.status(404).json({ success: false, message: 'Address not found' });
+        }
+
+        res.status(200).json({ success: true, address });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to get address', error: error.message });
+    }
+};
+
 exports.updateAddress = async (req, res) => {
     try {
         const { userId, addressId } = req.params;

@@ -3,21 +3,26 @@ import { toast } from "react-toastify";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import SideBar from "../components/Sidebar";
 import "../components/CSS/Home.css";
-import NavBar from "./Navbar";
+import {  useDispatch } from "react-redux";
+import { fetchCartItems } from "../store/slice/getUserslice";
+import NavBar from "../components/Navbar";
+// import SideBar from "../components/Sidebar"
 
 const LazySideBar = lazy(() => import("../components/Sidebar"));
 
 const Home = () => {
   const { category } = useParams("");
   const userId = localStorage.getItem("userId");
+  const dispatch = useDispatch();
 
   console.log("category :", category);
   const [productData, setProductData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [cart, setCart] = useState([]);
 
+  
+    
   const fetchAllProducts = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/products");
@@ -83,12 +88,12 @@ const Home = () => {
       fetchAllProducts();
     }
   }, [searchTerm]);
-
+ 
   const addToCart = async (pId) => {
     try {
       const userId = localStorage.getItem("userId");
       if (!userId) {
-        toast.warn("Please log in to add products to your cart");
+        toast.warn("Please log in to add products to your cart",{autoClose:3000});
         return;
       }
       const response = await axios.put(
@@ -96,7 +101,10 @@ const Home = () => {
         { product: pId }
       );
       setCart(response.data.product);
-      toast.success("Product added to cart successfully");
+      dispatch(fetchCartItems(userId));
+      toast.success("Product added to cart successfully", {
+        autoClose: 2000 
+    });
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -123,6 +131,7 @@ const Home = () => {
 
   return (
     <>
+   
       <NavBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className="row mainRow">
         <Suspense fallback={<div>Loading Sidebar...</div>}>

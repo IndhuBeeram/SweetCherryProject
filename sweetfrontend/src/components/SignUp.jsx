@@ -1,14 +1,13 @@
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import SideBar from "../components/Sidebar";
 import Login from "./Login";
 import "./CSS/Login.css";
 import NavBar from "./Navbar";
-import Header from "./Header";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -16,6 +15,8 @@ export default function SignUp() {
   const [data, setData] = useState({
     name: "",
     email: "",
+    age: "",
+    gender: "", // Corrected to empty string initially
     password: "",
     confirmpassword: "",
   });
@@ -28,26 +29,33 @@ export default function SignUp() {
     e.preventDefault();
 
     if (data.password !== data.confirmpassword) {
-      toast.error(
-        "Please make sure password and confirm password are the same."
-      );
+      toast.error("Please make sure password and confirm password are the same.");
       return;
     }
 
     try {
       const res = await axios.post("http://localhost:4000/api/register", data);
-      toast.success(res.data);
 
-      navigate("/login");
+      // Reset form data
+      setData({
+        name: "",
+        email: "",
+        age: "",
+        gender: "", // Reset gender state
+        password: "",
+        confirmpassword: "",
+      });
+      toast.success(res.data, { autoClose: 2000 });
+
     } catch (err) {
       console.error(err);
       const errorMessage = err.response?.data;
 
       if (errorMessage) {
-        toast.error("User already exists");
+        toast.error("User already exists", { autoClose: 2000 });
       } else {
         console.error("Error:", err);
-        toast.error("An error occurred. Please try again later.");
+        toast.error("An error occurred. Please try again later.", { autoClose: 3000 });
       }
     }
   };
@@ -81,6 +89,7 @@ export default function SignUp() {
                     id="name"
                     autoComplete="off"
                     name="name"
+                    value={data.name}
                     onChange={changeHandler}
                     required
                   />
@@ -97,6 +106,7 @@ export default function SignUp() {
                     id="email"
                     autoComplete="off"
                     name="email"
+                    value={data.email}
                     onChange={changeHandler}
                     required
                   />
@@ -110,10 +120,11 @@ export default function SignUp() {
                 <input
                   type="Number"
                   min="0"
-                  placeholder="Enter you're age"
+                  placeholder="Enter your age"
                   id="age"
                   autoComplete="off"
                   name="age"
+                  value={data.age}
                   onChange={changeHandler}
                 />
               </p>
@@ -132,6 +143,7 @@ export default function SignUp() {
                       id="htmlMale"
                       name="gender"
                       value="Male"
+                      checked={data.gender === "Male"} 
                       onChange={changeHandler}
                     />
                     <label htmlFor="htmlMale">Male</label>
@@ -142,6 +154,7 @@ export default function SignUp() {
                       id="htmlF"
                       name="gender"
                       value="Female"
+                      checked={data.gender === "Female"} 
                       onChange={changeHandler}
                     />
                     <label htmlFor="htmlF">Female</label>
@@ -159,6 +172,7 @@ export default function SignUp() {
                   id="password"
                   autoComplete="off"
                   name="password"
+                  value={data.password}
                   onChange={changeHandler}
                   required
                   minLength="6"
@@ -186,6 +200,7 @@ export default function SignUp() {
                   id="confirmpassword"
                   autoComplete="off"
                   name="confirmpassword"
+                  value={data.confirmpassword}
                   onChange={changeHandler}
                   required
                 />
