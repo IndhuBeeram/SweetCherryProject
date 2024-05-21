@@ -94,7 +94,7 @@ const ProductDetails = () => {
       );
       setCart(response.data.product);
       dispatch(fetchCartItems(userId));
-      toast.success("Product added to cart successfully",{autoClose:2000});
+      // toast.success("Product added to cart successfully",{autoClose:2000});
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -113,7 +113,7 @@ const ProductDetails = () => {
         { product: pId }
       );
       setWishlist(response.data.product);
-      toast.success("Product added to wishlist successfully",{autoClose:2000});
+      // toast.success("Product added to wishlist successfully",{autoClose:2000});
     } catch (error) {
       console.error("Error adding to wishlist:", error);
     }

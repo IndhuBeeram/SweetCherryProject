@@ -3,9 +3,12 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import "../components/CSS/SiteMap.css";
-
+import NavBar from "../components/Navbar";
+import SideBar from "../components/Sidebar"
 
 export default function SiteMap() {
+
+  
   const pages = [
     { name: "Home", url: "/" },
     { name: "NewProducts", url: "/New" },
@@ -31,9 +34,9 @@ export default function SiteMap() {
 
   return (
     <>
-     
+     <NavBar/>
       <div className="row mainRow">
-        
+        <SideBar/>
         <main className="col-9 col-t-8 col-m-12">
           <div className="caption col-12 col-t-12 col-m-12">
             <h4>SITE MAP</h4>

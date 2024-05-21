@@ -122,12 +122,15 @@ const Cart = () => {
   };
 
   const incrementCount = (productId) => {
-    const newCount = (count[productId] || 0) + 1;
+    if(count[productId]<10){
+      const newCount = (count[productId] || 0) + 1;
     setCount((prev) => ({
       ...prev,
       [productId]: newCount,
     }));
     updateCountInStorage(productId, newCount);
+    }
+    
   };
 
   const decrementCount = (productId) => {

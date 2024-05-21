@@ -28,6 +28,12 @@ const Address = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
+  useEffect(()=>{
+    if(!userId){
+      navigate("/")
+    }
+  },[])
+
   const fetchAddress = async () => {
     try {
       const response = await axios.get(
@@ -127,10 +133,10 @@ const Address = () => {
       toast.error("Mobile number must be 10 digits");
       return;
     }
-    if (!editedAddress.pincode || editedAddress.pincode.length !== 6) {
-      toast.error("Pincode must be 6 digits");
-      return;
-    }
+    // if (!editedAddress.pincode || editedAddress.pincode.length !== 6) {
+    //   toast.error("Pincode must be 6 digits");
+    //   return;
+    // }
     if (!editedAddress.locality) {
       toast.error("Locality is required");
       return;

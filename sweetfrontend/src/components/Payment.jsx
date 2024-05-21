@@ -22,6 +22,12 @@ const PaymentForm = () => {
   const dispatch = useDispatch();
   const {id}=useParams();
   console.log(id)
+
+  useEffect(()=>{
+    if(!userId){
+      navigate("/")
+    }
+  },[])
   const ProfileHandler = async () => {
     try {
      
@@ -157,6 +163,10 @@ const PaymentForm = () => {
               },
             });
             setCartItems([]);
+            cartItems.forEach((productId) => {
+              localStorage.removeItem(`count_${productId}`);
+            });
+
             dispatch(fetchCartItems(userId));
           } catch (error) {
             console.error('Order validation failed:', error);
@@ -234,12 +244,9 @@ const PaymentForm = () => {
     <NavLink to="/cart" >
         <button >Back</button>
     </NavLink>
-    <div style={{ marginRight: '10px' }}></div> {/* Spacer */}
+    <div style={{ marginRight: '10px' }}></div> 
     <button onClick={paymentHandler} className="btn btn-primary">Pay Now</button>
-</div>
-
-
-         
+</div>         
           </div>
         </main>
       </div>
